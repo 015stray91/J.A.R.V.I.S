@@ -1,0 +1,72 @@
+[MASTER]
+# Use multiple processes to speed up Pylint
+jobs=1
+
+[MESSAGES CONTROL]
+# Disable checks that are inherent to the Windows-specific architecture of
+# this project or common patterns used throughout the codebase.
+disable=
+    # Windows-only packages (pycaw, comtypes, pywin32) cannot be imported on
+    # Linux CI runners; suppress these errors for cross-platform linting.
+    import-error,
+    # Broad Exception catch is used intentionally in event-driven desktop
+    # automation code to prevent crashes from unexpected runtime errors.
+    broad-exception-caught,
+    # Conditional imports inside functions are used for optional Windows
+    # dependencies that degrade gracefully when unavailable.
+    import-outside-toplevel,
+    # COM interface access via _iid_ is the documented pycaw usage pattern.
+    protected-access,
+    # Module-level singletons (_logger, _config) use the global statement
+    # intentionally for lazy initialisation.
+    global-statement,
+    # **kwargs is accepted for forward compatibility in response handlers.
+    unused-argument,
+    # subprocess.run without check= is intentional in fallback helpers.
+    subprocess-run-check,
+    # Unused loop variables are acceptable in the places they appear.
+    unused-variable,
+    # Private module-level constants (_logger, _config) use underscore
+    # naming by convention; UPPER_CASE is not appropriate here.
+    invalid-name,
+    # Refactor suggestions below are style preferences, not functional issues.
+    # Unnecessary else/elif after return — acceptable readability choice.
+    no-else-return,
+    # Too few public methods — small focused helper classes are intentional.
+    too-few-public-methods,
+    # Too many return statements — complex recognition logic needs multiple paths.
+    too-many-return-statements,
+    # ThreadPoolExecutor callable false-positive in pylint static analysis.
+    not-callable,
+    # os.startfile is a Windows-only API; no-member false positive on Linux.
+    no-member,
+    # __init__.py re-exports cause apparent self-import; this is intentional.
+    import-self,
+    # Example scripts omit docstrings intentionally for conciseness.
+    missing-function-docstring,
+    # Reuse of 'result' name in example scripts is clear from context.
+    redefined-outer-name,
+    # Empty pass blocks are used as explicit no-op placeholders.
+    unnecessary-pass,
+    # Complex desktop AI classes require more than 7 instance attributes.
+    too-many-instance-attributes,
+    # subprocess.Popen is used without 'with' to allow background processes.
+    consider-using-with,
+    # File-traversal code requires more nesting levels than the default limit.
+    too-many-nested-blocks,
+    # Window-capture helper requires many local state variables.
+    too-many-locals,
+    # Screenshot API exposes all relevant parameters in one signature.
+    too-many-arguments,
+    # Same reason — positional argument count mirrors the screenshot API design.
+    too-many-positional-arguments,
+    # f-string-without-interpolation is a minor style warning, not an error.
+    f-string-without-interpolation
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=120
+
+[BASIC]
+# Good variable names that should not trigger naming warnings.
+good-names=i,j,k,e,x,y,w,h,v,sr,gw,pa
