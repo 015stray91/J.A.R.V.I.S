@@ -11,7 +11,8 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from utils import get_logger, log_startup, log_shutdown, get_config
+# pylint: disable=wrong-import-position
+from utils import get_logger, log_shutdown, get_config
 from core import get_jarvis
 
 logger = get_logger()
@@ -24,32 +25,32 @@ def parse_arguments():
         description='Jarvis V2 - Desktop AI Assistant',
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    
+
     parser.add_argument(
         '--mode',
         choices=['gui', 'voice', 'cli', 'daemon'],
         default='gui',
         help='Operating mode (default: gui)'
     )
-    
+
     parser.add_argument(
         '--debug',
         action='store_true',
         help='Enable debug mode'
     )
-    
+
     parser.add_argument(
         '--no-voice',
         action='store_true',
         help='Disable voice features'
     )
-    
+
     parser.add_argument(
         '--command',
         type=str,
         help='Execute a single command and exit'
     )
-    
+
     return parser.parse_args()
 
 
@@ -61,24 +62,24 @@ def run_cli_mode(jarvis):
     print("  Type 'exit' or 'quit' to stop")
     print("  Type 'help' for available commands")
     print("="*60 + "\n")
-    
+
     jarvis.start()
-    
+
     try:
         while True:
             try:
                 command = input("\nYou: ").strip()
-                
+
                 if not command:
                     continue
-                
+
                 if command.lower() in ['exit', 'quit', 'stop']:
                     print("\nJarvis: Goodbye, sir.")
                     break
-                
+
                 result = jarvis.process_command(command, speak_response=False)
                 print(f"\nJarvis: {result['response']}")
-                
+
             except KeyboardInterrupt:
                 print("\n\nJarvis: Shutting down, sir.")
                 break
@@ -96,9 +97,9 @@ def run_voice_mode(jarvis):
     print("  Press Ctrl+C to stop")
     print("  Listening for voice commands...")
     print("="*60 + "\n")
-    
+
     jarvis.start()
-    
+
     try:
         # If wake word is enabled, use that
         if jarvis.wake_word_detector:
@@ -107,12 +108,12 @@ def run_voice_mode(jarvis):
         else:
             # Otherwise, continuous listening
             jarvis.start_listening()
-        
+
         # Keep running
         import time
         while True:
             time.sleep(1)
-            
+
     except KeyboardInterrupt:
         print("\n\nStopping...")
     finally:
@@ -122,16 +123,16 @@ def run_voice_mode(jarvis):
 def run_gui_mode(jarvis):
     """Run with GUI"""
     logger.info("Starting GUI mode")
-    
+
     try:
         from gui.main_window import JarvisGUI
-        
+
         jarvis.start()
-        
+
         # Create and run GUI
         gui = JarvisGUI(jarvis)
         gui.run()
-        
+
     except ImportError as e:
         logger.error(f"GUI dependencies not available: {e}")
         print("\nGUI mode requires customtkinter. Install with:")
@@ -152,21 +153,21 @@ def run_daemon_mode(jarvis):
     logger.info("Starting daemon mode")
     print("Daemon mode - Running in background...")
     print("Press Ctrl+C to stop")
-    
+
     jarvis.start()
-    
+
     try:
         # Start wake word or continuous listening
         if jarvis.wake_word_detector:
             jarvis.start_wake_word_detection()
         else:
             jarvis.start_listening()
-        
+
         # Keep running
         import time
         while True:
             time.sleep(1)
-            
+
     except KeyboardInterrupt:
         print("\nStopping daemon...")
     finally:
@@ -176,41 +177,41 @@ def run_daemon_mode(jarvis):
 def execute_single_command(jarvis, command: str):
     """Execute a single command and exit"""
     logger.info(f"Executing single command: {command}")
-    
+
     jarvis.start()
     result = jarvis.process_command(command, speak_response=False)
-    
+
     print(f"\nCommand: {command}")
     print(f"Response: {result['response']}")
     print(f"Success: {result['success']}")
-    
+
     jarvis.stop()
-    
+
     return 0 if result['success'] else 1
 
 
 def main():
     """Main entry point"""
     args = parse_arguments()
-    
+
     # Set debug mode
     if args.debug:
         import logging
         logger.logger.setLevel(logging.DEBUG)
         config.set('general.debug_mode', True, save=False)
-    
+
     # Disable voice if requested
     if args.no_voice:
         config.set('voice.enabled', False, save=False)
-    
+
     # Get Jarvis instance
     jarvis = get_jarvis()
-    
+
     try:
         # Single command mode
         if args.command:
             return execute_single_command(jarvis, args.command)
-        
+
         # Interactive modes
         if args.mode == 'cli':
             run_cli_mode(jarvis)
@@ -220,9 +221,9 @@ def main():
             run_gui_mode(jarvis)
         elif args.mode == 'daemon':
             run_daemon_mode(jarvis)
-        
+
         return 0
-        
+
     except Exception as e:
         logger.error(f"Fatal error: {e}", exc_info=True)
         print(f"\nFatal error: {e}")

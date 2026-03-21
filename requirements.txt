@@ -29,6 +29,8 @@ watchdog>=3.0.0
 requests>=2.31.0
 python-dotenv>=1.0.0
 pyyaml>=6.0.0
+pycaw>=0.0.8
+comtypes>=1.4.0
 
 # Logging & Monitoring
 colorama>=0.4.6

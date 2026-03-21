@@ -1,9 +1,10 @@
 """
 Generate Word Document for JARVIS V2 Project Report
 """
+# pylint: disable=line-too-long
 
 from docx import Document
-from docx.shared import Inches, Pt, RGBColor
+from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 # Create document

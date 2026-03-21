@@ -8,14 +8,14 @@ import re
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional
 import subprocess
 
 
 def get_time_greeting() -> str:
     """Get appropriate greeting based on time of day"""
     hour = datetime.now().hour
-    
+
     if 5 <= hour < 12:
         return "Good morning"
     elif 12 <= hour < 17:
@@ -52,10 +52,10 @@ def sanitize_filename(filename: str) -> str:
     # Remove invalid Windows filename characters
     invalid_chars = r'[<>:"/\\|?*]'
     sanitized = re.sub(invalid_chars, '_', filename)
-    
+
     # Remove leading/trailing spaces and periods
     sanitized = sanitized.strip('. ')
-    
+
     return sanitized or 'unnamed'
 
 
@@ -80,7 +80,7 @@ def find_executable(app_name: str) -> Optional[str]:
         os.path.expandvars(f"%LOCALAPPDATA%\\Programs\\{app_name}"),
         os.path.expandvars(f"%APPDATA%\\{app_name}"),
     ]
-    
+
     # Check if it's in PATH
     try:
         result = subprocess.run(
@@ -91,9 +91,9 @@ def find_executable(app_name: str) -> Optional[str]:
         )
         if result.returncode == 0:
             return result.stdout.strip().split('\n')[0]
-    except:
+    except Exception:
         pass
-    
+
     # Search common paths
     for base_path in common_paths:
         if os.path.exists(base_path):
@@ -102,7 +102,7 @@ def find_executable(app_name: str) -> Optional[str]:
                 for file in files:
                     if file.lower().endswith('.exe') and app_name.lower() in file.lower():
                         return os.path.join(root, file)
-    
+
     return None
 
 
@@ -115,19 +115,19 @@ def parse_natural_number(text: str) -> Optional[int]:
         'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80,
         'ninety': 90, 'hundred': 100, 'thousand': 1000
     }
-    
+
     text = text.lower().strip()
-    
+
     # Try to parse as digit first
     try:
         return int(text)
     except ValueError:
         pass
-    
+
     # Try to parse as word
     if text in number_words:
         return number_words[text]
-    
+
     return None
 
 
@@ -138,19 +138,19 @@ def extract_percentage(text: str) -> Optional[int]:
         r'(\d+)\s*%',
         r'(\d+)\s*percent',
     ]
-    
+
     for pattern in patterns:
         match = re.search(pattern, text.lower())
         if match:
             return int(match.group(1))
-    
+
     # Try to parse word numbers
     words = text.lower().split()
     for word in words:
         num = parse_natural_number(word)
         if num is not None and 0 <= num <= 100:
             return num
-    
+
     return None
 
 
@@ -181,14 +181,14 @@ def get_downloads_path() -> Path:
 def throttle(func, min_interval: float = 1.0):
     """Decorator to throttle function calls"""
     last_called = [0.0]
-    
+
     def wrapper(*args, **kwargs):
         now = time.time()
         if now - last_called[0] >= min_interval:
             last_called[0] = now
             return func(*args, **kwargs)
         return None
-    
+
     return wrapper
 
 
@@ -212,16 +212,16 @@ def normalize_app_name(name: str) -> str:
     """Normalize application name for matching"""
     # Remove common suffixes
     name = re.sub(r'\.(exe|app)$', '', name.lower())
-    
+
     # Remove version numbers
     name = re.sub(r'\s*\d+(\.\d+)*\s*', '', name)
-    
+
     # Remove special characters
     name = re.sub(r'[^a-z0-9\s]', '', name)
-    
+
     # Collapse whitespace
     name = ' '.join(name.split())
-    
+
     return name.strip()
 
 
@@ -229,19 +229,19 @@ def similarity_score(str1: str, str2: str) -> float:
     """Calculate simple similarity score between two strings (0-1)"""
     str1 = str1.lower()
     str2 = str2.lower()
-    
+
     if str1 == str2:
         return 1.0
-    
+
     if str1 in str2 or str2 in str1:
         return 0.8
-    
+
     # Simple character overlap
     set1 = set(str1)
     set2 = set(str2)
     overlap = len(set1.intersection(set2))
     total = len(set1.union(set2))
-    
+
     return overlap / total if total > 0 else 0.0
 
 
@@ -253,25 +253,25 @@ def confirm_action(message: str) -> bool:
 
 class Timer:
     """Simple context manager for timing operations"""
-    
+
     def __init__(self, name: str = "Operation"):
         self.name = name
         self.start_time = None
         self.end_time = None
-    
+
     def __enter__(self):
         self.start_time = time.time()
         return self
-    
+
     def __exit__(self, *args):
         self.end_time = time.time()
-    
+
     @property
     def elapsed(self) -> float:
         """Get elapsed time in seconds"""
         if self.end_time:
             return self.end_time - self.start_time
         return time.time() - self.start_time
-    
+
     def __str__(self):
         return f"{self.name}: {self.elapsed:.2f}s"
