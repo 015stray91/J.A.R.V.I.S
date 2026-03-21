@@ -1,6 +1,6 @@
 {
   "general": {
-    "app_name": "Jarvis V2",
+    "app_name": "Jarvis X",
     "version": "2.0.0",
     "debug_mode": false,
     "log_level": "INFO"
@@ -8,6 +8,9 @@
   "voice": {
     "enabled": true,
     "wake_word": "jarvis",
+    "wake_word_aliases": [],
+    "wake_word_min_similarity": 0.86,
+    "wake_word_enabled": false,
     "continuous_listening": true,
     "recognition_engine": "google",
     "recognition_timeout": 5,
@@ -17,7 +20,17 @@
     "tts_rate": 175,
     "tts_volume": 0.9,
     "energy_threshold": 4000,
-    "dynamic_energy_threshold": true
+    "dynamic_energy_threshold": true,
+    "pause_threshold": 0.8,
+    "non_speaking_duration": 0.4,
+    "offline_engine": "sphinx",
+    "voice_lock_enabled": false,
+    "voice_lock_phrase": "jarvis alpha",
+    "command_corrections": {
+      "vs code": "vscode",
+      "git hub": "github",
+      "build log": "build log"
+    }
   },
   "personality": {
     "formality_level": "professional",
@@ -95,6 +108,11 @@
       "system_changes": false,
       "registry_access": false,
       "network_operations": true
+    },
+    "admin_control": {
+      "enabled": true,
+      "passphrase": "",
+      "session_minutes": 20
     }
   },
   "shortcuts": {
@@ -106,11 +124,141 @@
   "advanced": {
     "api_keys": {
       "openai_key": "",
-      "weather_api_key": ""
+      "weather_api_key": "",
+      "hiveos_token": ""
     },
     "cache_enabled": true,
     "cache_duration": 3600,
     "auto_update_check": true,
-    "telemetry_enabled": false
+    "telemetry_enabled": false,
+    "offline_mode": true
+  },
+  "crypto": {
+    "tracked_coins": [
+      "bitcoin",
+      "ethereum",
+      "solana"
+    ],
+    "hiveos_farm_id": "",
+    "transaction_control_enabled": false,
+    "trade_mode": "advisory",
+    "loss_prevention": {
+      "drop_threshold_usd": 5.0,
+      "drop_threshold_percent": 3.0
+    },
+    "positions": [],
+    "wallet_watch": [],
+    "exchange_watch": [
+      "coinbase",
+      "kraken",
+      "trustwallet"
+    ],
+    "read_only_mode": true
+  },
+  "remote": {
+    "kde_connect": {
+      "default_device_id": ""
+    },
+    "linux": {
+      "profiles": {
+        "default": {
+          "host": "",
+          "user": "",
+          "port": 22,
+          "key_path": ""
+        }
+      }
+    }
+  },
+  "smart_home": {
+    "devices": {
+      "outside_lights": {
+        "type": "kasa",
+        "model": "HS200",
+        "alias": "outside lights",
+        "ip": ""
+      }
+    }
+  },
+  "automations": {
+    "enabled": true,
+    "schedules": [
+      {
+        "id": "outside_lights_on",
+        "enabled": true,
+        "time": "20:00",
+        "days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri",
+          "sat",
+          "sun"
+        ],
+        "action": {
+          "type": "smart_switch",
+          "device": "outside_lights",
+          "state": "on"
+        }
+      },
+      {
+        "id": "outside_lights_off",
+        "enabled": true,
+        "time": "06:30",
+        "days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri",
+          "sat",
+          "sun"
+        ],
+        "action": {
+          "type": "smart_switch",
+          "device": "outside_lights",
+          "state": "off"
+        }
+      },
+      {
+        "id": "firetv_lullaby_refresh",
+        "enabled": false,
+        "every_minutes": 10,
+        "window_start": "22:30",
+        "window_end": "23:59",
+        "days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri",
+          "sat",
+          "sun"
+        ],
+        "action": {
+          "type": "firetv_key",
+          "key": "playpause"
+        }
+      }
+    ]
+  },
+  "workflow": {
+    "memory_file": "data/workflow_memory.json",
+    "max_entries": 800,
+    "export_directory": "exports"
+  },
+  "development": {
+    "workspace_root": "",
+    "timeout_seconds": 180,
+    "commands": {
+      "run_tests": "python -m pytest -q",
+      "run_unit_tests": "python test_jarvis.py",
+      "install_dependencies": "python -m pip install -r requirements.txt",
+      "lint": "python -m pytest -q",
+      "build": "python -m compileall .",
+      "git_status": "git status",
+      "git_pull": "git pull"
+    }
   }
 }

@@ -1,5 +1,5 @@
 """
-Core package for Jarvis V2
+Core package for Jarvis X
 """
 
 from .jarvis import Jarvis, get_jarvis
@@ -14,3 +14,4 @@ __all__ = [
     'IntentRecognizer',
     'Validator'
 ]
+

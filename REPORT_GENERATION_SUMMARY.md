@@ -17,7 +17,7 @@
 ## Report Contents
 
 ### PAGE 1 — Title / Abstract / Introduction (1 mark)
-✅ **Project Title:** JARVIS V2 - Desktop AI Assistant
+✅ **Project Title:** JARVIS X - Desktop AI Assistant
 ✅ **Student Details:** Placeholder for name, register number, guide, etc.
 ✅ **Abstract:** 150-word comprehensive summary
 ✅ **Keywords:** Voice Assistant, NLP, Desktop Automation, Speech Recognition, Python, AI
@@ -231,7 +231,7 @@ These existing project files were analyzed to create the report:
 ---
 
 **Report Generated:** October 26, 2025
-**Project:** JARVIS V2 - Desktop AI Assistant
+**Project:** JARVIS X - Desktop AI Assistant
 **Course:** 21CSC203P - Advanced Programming Practice
 **Institution:** SRM Institute of Science and Technology
 
@@ -246,3 +246,4 @@ If you need any modifications or have questions:
 4. You can add/remove sections as per your guide's requirements
 
 **Good luck with your submission! 🎓**
+

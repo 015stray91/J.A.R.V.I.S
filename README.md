@@ -1,4 +1,4 @@
-# Jarvis V2 - Desktop AI Assistant
+# Jarvis X - Desktop AI Assistant
 (Screenshots Addition WIP)
 <div align="center">
 
@@ -31,6 +31,8 @@
   - [Text Commands](#text-commands)
   - [GUI Interface](#gui-interface)
 - [Project Architecture](#-project-architecture)
+- [Provenance](#-provenance)
+- [Notice](#-notice)
 - [Configuration](#-configuration)
 - [Command Reference](#-command-reference)
 - [Development](#-development)
@@ -47,11 +49,21 @@
 
 ## 🌟 Overview
 
-**Jarvis V2** is a sophisticated desktop AI assistant that brings the power of voice-controlled computing to your fingertips. Inspired by Tony Stark's JARVIS from the Marvel Cinematic Universe, this assistant combines natural language processing, system automation, and intelligent task management to transform how you interact with your computer.
+**Jarvis X** is a sophisticated desktop AI assistant that brings the power of voice-controlled computing to your fingertips. Inspired by Tony Stark's JARVIS from the Marvel Cinematic Universe, this assistant combines natural language processing, system automation, and intelligent task management to transform how you interact with your computer.
 
-Whether you're launching applications, managing windows, capturing screenshots, or controlling system settings—Jarvis V2 handles it all with elegance and efficiency, complete with a personality that makes computing feel less like work and more like collaboration with an intelligent companion.
+Whether you're launching applications, managing windows, capturing screenshots, or controlling system settings—Jarvis X handles it all with elegance and efficiency, complete with a personality that makes computing feel less like work and more like collaboration with an intelligent companion.
 
-### Why Jarvis V2?
+## 🧾 Provenance
+
+Jarvis X is an independently extended and customized project. It may include general architectural inspiration and selected implementation ideas common in desktop assistant tooling, but this codebase has been substantially modified with new modules, workflows, integrations, and UX changes.
+
+See PROVENANCE.md for implementation-origin notes and NOTICE.md for attribution guidance.
+
+## 📌 Notice
+
+Use this project under the terms in LICENSE. If you redistribute modified versions, preserve original attributions where required and document your own changes.
+
+### Why Jarvis X?
 
 - 🎤 **Hands-Free Computing**: Control your PC entirely through voice commands
 - 🧠 **Intelligent Understanding**: Natural language processing that understands context
@@ -134,7 +146,7 @@ Whether you're launching applications, managing windows, capturing screenshots, 
 <div align="center">
 
 ### Video Walkthrough
-[![Jarvis V2 Demo](docs/images/demo-thumbnail.png)](https://youtu.be/your-demo-video)
+[![Jarvis X Demo](docs/images/demo-thumbnail.png)](https://youtu.be/your-demo-video)
 
 ### Screenshots
 
@@ -150,7 +162,7 @@ Whether you're launching applications, managing windows, capturing screenshots, 
 
 ### Prerequisites
 
-Before installing Jarvis V2, ensure you have:
+Before installing Jarvis X, ensure you have:
 
 | Requirement | Minimum | Recommended |
 |------------|---------|-------------|
@@ -172,8 +184,8 @@ Get up and running in under 5 minutes:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/JarvisV2.git
-cd JarvisV2
+git clone https://github.com/yourusername/JarvisX.git
+cd JarvisX
 
 # 2. Create and activate virtual environment
 python -m venv venv
@@ -195,7 +207,7 @@ python main.py
 #### Custom Installation Location
 ```bash
 # Install to specific directory
-python setup.py --install-dir "C:\Program Files\JarvisV2"
+python setup.py --install-dir "C:\Program Files\JarvisX"
 ```
 
 #### Development Installation
@@ -369,7 +381,7 @@ Access the text interface through the GUI for the same functionality:
 ### Directory Structure
 
 ```
-JarvisV2/
+JarvisX/
 ├── 📄 main.py                      # Application entry point
 ├── 📄 setup.py                     # Installation and setup script
 ├── 📄 requirements.txt             # Production dependencies
@@ -493,7 +505,7 @@ class ModuleInterface:
 
 ### Configuration Hierarchy
 
-Jarvis V2 uses a layered configuration system:
+Jarvis X uses a layered configuration system:
 
 1. **Default Settings**: Built-in defaults (`core/defaults.py`)
 2. **User Configuration**: `config/config.json`
@@ -576,8 +588,8 @@ For complete command reference, see [COMMANDS.md](docs/COMMANDS.md).
 
 ```bash
 # Clone and setup
-git clone https://github.com/yourusername/JarvisV2.git
-cd JarvisV2
+git clone https://github.com/yourusername/JarvisX.git
+cd JarvisX
 
 # Install development dependencies
 pip install -r requirements-dev.txt
@@ -670,7 +682,7 @@ pytest tests/test_integration.py -v
 
 ### Code Style
 
-Jarvis V2 follows PEP 8 with these tools:
+Jarvis X follows PEP 8 with these tools:
 
 ```bash
 # Format code
@@ -824,13 +836,13 @@ Check logs in:
 ## ❓ FAQ
 
 **Q: Does Jarvis work on macOS or Linux?**  
-A: Currently, Jarvis V2 is optimized for Windows 10/11. Linux support is in beta. macOS support is planned for v3.0.
+A: Currently, Jarvis X is optimized for Windows 10/11. Linux support is in beta. macOS support is planned for v3.0.
 
 **Q: Can Jarvis access the internet?**  
 A: Jarvis can perform web searches and check for updates, but does not upload data. All processing is local.
 
 **Q: How much does it cost?**  
-A: Jarvis V2 is completely free and open-source under the MIT License.
+A: Jarvis X is completely free and open-source under the MIT License.
 
 **Q: Can I use Jarvis for commercial purposes?**  
 A: Yes, the MIT License allows commercial use with attribution.
@@ -890,13 +902,13 @@ See [full roadmap](docs/ROADMAP.md) for detailed features and timelines.
 
 ## 🤝 Contributing
 
-We love contributions! Jarvis V2 is made better by the community.
+We love contributions! Jarvis X is made better by the community.
 
 ### How to Contribute
 
 #### Reporting Bugs
 
-1. Check [existing issues](https://github.com/yourusername/JarvisV2/issues)
+1. Check [existing issues](https://github.com/yourusername/JarvisX/issues)
 2. Create a new issue with:
    - Clear, descriptive title
    - Steps to reproduce
@@ -906,7 +918,7 @@ We love contributions! Jarvis V2 is made better by the community.
 
 #### Suggesting Features
 
-1. Open a [feature request](https://github.com/yourusername/JarvisV2/issues/new?template=feature_request.md)
+1. Open a [feature request](https://github.com/yourusername/JarvisX/issues/new?template=feature_request.md)
 2. Describe the feature and use case
 3. Explain why it would be valuable
 4. Consider implementation complexity
@@ -979,11 +991,11 @@ furnished to do so, subject to the following conditions:
 - **[spaCy](https://spacy.io/)** - Natural language processing
 
 ### Contributors
-Thanks to all contributors who have helped shape Jarvis V2! 🎉
+Thanks to all contributors who have helped shape Jarvis X! 🎉
 
 - [@contributor1](https://github.com/contributor1) - Feature XYZ
 - [@contributor2](https://github.com/contributor2) - Bug fixes
-- [All Contributors](https://github.com/yourusername/JarvisV2/graphs/contributors)
+- [All Contributors](https://github.com/yourusername/JarvisX/graphs/contributors)
 
 ### Special Thanks
 - Open-source community for amazing tools and libraries
@@ -1006,24 +1018,24 @@ Need assistance? We're here to help!
 
 #### Community Support
 - 💬 [Discord Server](https://discord.gg/your-server) - Chat with the community
-- 💡 [GitHub Discussions](https://github.com/yourusername/JarvisV2/discussions) - Ask questions and share ideas
+- 💡 [GitHub Discussions](https://github.com/yourusername/JarvisX/discussions) - Ask questions and share ideas
 - 📧 [Mailing List](mailto:jarvis-support@example.com) - Newsletter and updates
 
 #### Issue Reporting
-- 🐛 [Report a Bug](https://github.com/yourusername/JarvisV2/issues/new?template=bug_report.md)
-- ✨ [Request a Feature](https://github.com/yourusername/JarvisV2/issues/new?template=feature_request.md)
+- 🐛 [Report a Bug](https://github.com/yourusername/JarvisX/issues/new?template=bug_report.md)
+- ✨ [Request a Feature](https://github.com/yourusername/JarvisX/issues/new?template=feature_request.md)
 - 🔒 [Security Issues](SECURITY.md) - For security vulnerabilities
 
 #### Professional Support
 For enterprise support, training, or custom development:
-- 📧 Email: enterprise@jarvisv2.dev
-- 🌐 Website: [https://jarvisv2.dev/enterprise](https://jarvisv2.dev/enterprise)
+- 📧 Email: enterprise@jarvisx.dev
+- 🌐 Website: [https://jarvisx.dev/enterprise](https://jarvisx.dev/enterprise)
 
 ---
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/JarvisV2&type=Date)](https://star-history.com/#yourusername/JarvisV2&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/JarvisX&type=Date)](https://star-history.com/#yourusername/JarvisX&Date)
 
 ---
 
@@ -1031,40 +1043,40 @@ For enterprise support, training, or custom development:
 
 | Metric | Status |
 |--------|--------|
-| **Build** | ![Build Status](https://img.shields.io/github/workflow/status/yourusername/JarvisV2/CI) |
+| **Build** | ![Build Status](https://img.shields.io/github/workflow/status/yourusername/JarvisX/CI) |
 | **Tests** | ![Tests](https://img.shields.io/badge/tests-passing-brightgreen) |
-| **Coverage** | ![Coverage](https://img.shields.io/codecov/c/github/yourusername/JarvisV2) |
-| **Issues** | ![Open Issues](https://img.shields.io/github/issues/yourusername/JarvisV2) |
-| **Pull Requests** | ![Open PRs](https://img.shields.io/github/issues-pr/yourusername/JarvisV2) |
-| **Last Commit** | ![Last Commit](https://img.shields.io/github/last-commit/yourusername/JarvisV2) |
-| **Release** | ![Release](https://img.shields.io/github/v/release/yourusername/JarvisV2) |
-| **Downloads** | ![Downloads](https://img.shields.io/github/downloads/yourusername/JarvisV2/total) |
+| **Coverage** | ![Coverage](https://img.shields.io/codecov/c/github/yourusername/JarvisX) |
+| **Issues** | ![Open Issues](https://img.shields.io/github/issues/yourusername/JarvisX) |
+| **Pull Requests** | ![Open PRs](https://img.shields.io/github/issues-pr/yourusername/JarvisX) |
+| **Last Commit** | ![Last Commit](https://img.shields.io/github/last-commit/yourusername/JarvisX) |
+| **Release** | ![Release](https://img.shields.io/github/v/release/yourusername/JarvisX) |
+| **Downloads** | ![Downloads](https://img.shields.io/github/downloads/yourusername/JarvisX/total) |
 
 ---
 
 ## 🎓 Learning Resources
 
 ### Tutorials
-- [Getting Started with Jarvis V2](docs/tutorials/getting-started.md)
+- [Getting Started with Jarvis X](docs/tutorials/getting-started.md)
 - [Creating Custom Commands](docs/tutorials/custom-commands.md)
 - [Voice Profile Customization](docs/tutorials/voice-profiles.md)
 - [Building Plugins](docs/tutorials/plugin-development.md)
 
 ### Video Series
-- [Jarvis V2 Introduction](https://youtube.com/watch?v=example1)
+- [Jarvis X Introduction](https://youtube.com/watch?v=example1)
 - [Advanced Configuration](https://youtube.com/watch?v=example2)
 - [Developer Deep Dive](https://youtube.com/watch?v=example3)
 
 ### Blog Posts
-- [Why We Built Jarvis V2](https://blog.jarvisv2.dev/why-we-built-this)
-- [Architecture Deep Dive](https://blog.jarvisv2.dev/architecture)
-- [Voice Recognition Best Practices](https://blog.jarvisv2.dev/voice-recognition)
+- [Why We Built Jarvis X](https://blog.jarvisx.dev/why-we-built-this)
+- [Architecture Deep Dive](https://blog.jarvisx.dev/architecture)
+- [Voice Recognition Best Practices](https://blog.jarvisx.dev/voice-recognition)
 
 ---
 
 ## 🔐 Security
 
-Security is a top priority for Jarvis V2. 
+Security is a top priority for Jarvis X. 
 
 ### Security Features
 - ✅ Local processing - no cloud data transfer
@@ -1078,7 +1090,7 @@ Security is a top priority for Jarvis V2.
 **Please DO NOT open public issues for security vulnerabilities.**
 
 Instead:
-1. Email: security@jarvisv2.dev
+1. Email: security@jarvisx.dev
 2. Include detailed description
 3. Provide steps to reproduce
 4. Allow time for fix before disclosure
@@ -1288,7 +1300,7 @@ See [MIGRATION.md](docs/MIGRATION.md) for detailed upgrade instructions.
 
 ## 💖 Support the Project
 
-If Jarvis V2 has been helpful, consider supporting its development:
+If Jarvis X has been helpful, consider supporting its development:
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/yourusername)
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/yourusername)
@@ -1310,6 +1322,7 @@ If Jarvis V2 has been helpful, consider supporting its development:
 
 ![Footer Image](docs/images/footer.png)
 
-Copyright © 2025 Jarvis V2 Contributors | [MIT License](LICENSE)
+Copyright © 2025 Jarvis X Contributors | [MIT License](LICENSE)
 
 </div>
+

@@ -4,14 +4,17 @@
 # Speech Recognition & TTS
 SpeechRecognition>=3.10.0
 pyttsx3>=2.90
-pyaudio>=0.2.14
 pvporcupine>=3.0.0  # Wake word detection
+
+# Optional voice backends (may require native build tools on Windows)
+# pyaudio>=0.2.14
+# pocketsphinx>=5.0.3
 
 # Desktop Automation
 pyautogui>=0.9.54
 pygetwindow>=0.0.9
 psutil>=5.9.6
-pywin32>=306  # Windows API access
+pywin32>=306; platform_system == "Windows"  # Windows API access
 pillow>=10.0.0
 
 # Natural Language Processing
@@ -27,10 +30,11 @@ watchdog>=3.0.0
 
 # Utilities
 requests>=2.31.0
+python-kasa>=0.7.0
 python-dotenv>=1.0.0
 pyyaml>=6.0.0
-pycaw>=0.0.8
-comtypes>=1.4.0
+pycaw>=0.0.8; platform_system == "Windows"
+comtypes>=1.4.0; platform_system == "Windows"
 
 # Logging & Monitoring
 colorama>=0.4.6

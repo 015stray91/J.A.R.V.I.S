@@ -1,5 +1,5 @@
 """
-Speech Recognition for Jarvis V2
+Speech Recognition for Jarvis X
 Converts speech to text using various engines
 """
 
@@ -21,14 +21,24 @@ class SpeechRecognizer:
 
         # Load configuration
         self.engine = config.get('voice.recognition_engine', 'google')
+        self.offline_only = config.get('advanced.offline_mode', False)
         self.timeout = config.get('voice.recognition_timeout', 5)
         self.phrase_limit = config.get('voice.phrase_time_limit', 10)
         self.energy_threshold = config.get('voice.energy_threshold', 4000)
         self.dynamic_energy = config.get('voice.dynamic_energy_threshold', True)
+        self.pause_threshold = config.get('voice.pause_threshold', 0.8)
+        self.non_speaking_duration = config.get('voice.non_speaking_duration', 0.4)
+        self.corrections = config.get('voice.command_corrections', {})
 
         # Configure recognizer
         self.recognizer.energy_threshold = self.energy_threshold
         self.recognizer.dynamic_energy_threshold = self.dynamic_energy
+        self.recognizer.pause_threshold = self.pause_threshold
+        self.recognizer.non_speaking_duration = self.non_speaking_duration
+
+        if self.offline_only and self.engine == 'google':
+            self.engine = config.get('voice.offline_engine', 'sphinx')
+            logger.info(f"Offline mode enabled, using recognition engine: {self.engine}")
 
         # Calibrate for ambient noise
         self._calibrate()
@@ -74,6 +84,7 @@ class SpeechRecognizer:
             text = self._recognize_audio(audio)
 
             if text:
+                text = self._normalize_recognized_text(text)
                 logger.info(f"Recognized: {text}")
                 return {
                     'success': True,
@@ -191,6 +202,18 @@ class SpeechRecognizer:
         self.energy_threshold = threshold
         logger.info(f"Energy threshold set to {threshold}")
 
+    def _normalize_recognized_text(self, text: str) -> str:
+        """Normalize recognized text using user-defined corrections"""
+        cleaned = " ".join(text.strip().split())
+        lowered = cleaned.lower()
+
+        for wrong, correct in self.corrections.items():
+            if wrong and correct:
+                lowered = lowered.replace(wrong.lower(), correct.lower())
+
+        return lowered
+
     def recalibrate(self):
         """Recalibrate microphone for current ambient noise"""
         self._calibrate()
+

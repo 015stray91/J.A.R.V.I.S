@@ -1,5 +1,5 @@
 """
-Jarvis V2 - Desktop AI Assistant
+Jarvis X - Desktop AI Assistant
 Main entry point
 """
 
@@ -22,7 +22,7 @@ config = get_config()
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Jarvis V2 - Desktop AI Assistant',
+        description='Jarvis X - Desktop AI Assistant',
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
@@ -58,7 +58,7 @@ def run_cli_mode(jarvis):
     """Run in CLI mode with text input"""
     logger.info("Starting CLI mode")
     print("\n" + "="*60)
-    print("  JARVIS V2 - Desktop AI Assistant")
+    print("  JARVIS X - Desktop AI Assistant")
     print("  Type 'exit' or 'quit' to stop")
     print("  Type 'help' for available commands")
     print("="*60 + "\n")
@@ -93,7 +93,7 @@ def run_voice_mode(jarvis):
     """Run in voice-only mode"""
     logger.info("Starting voice mode")
     print("\n" + "="*60)
-    print("  JARVIS V2 - Voice Mode")
+    print("  JARVIS X - Voice Mode")
     print("  Press Ctrl+C to stop")
     print("  Listening for voice commands...")
     print("="*60 + "\n")

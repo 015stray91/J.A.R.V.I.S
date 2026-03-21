@@ -1,5 +1,5 @@
 """
-Window Manager for Jarvis V2
+Window Manager for Jarvis X
 Handles window positioning and management
 """
 
@@ -194,3 +194,4 @@ class WindowManager:
 
 # Module exports
 __all__ = ['WindowManager']
+

@@ -1,4 +1,4 @@
-# Quick Start Guide for Jarvis V2
+# Quick Start Guide for Jarvis X
 
 ## Installation
 
@@ -103,3 +103,4 @@ For advanced features, add to config.json:
 - Check logs in `logs/` folder
 - Run with `--debug` flag for detailed output
 - Check README.md for full documentation
+

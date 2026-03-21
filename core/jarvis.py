@@ -1,6 +1,6 @@
 """
 Main Jarvis Controller
-Central control system for Jarvis V2
+Central control system for Jarvis X
 """
 
 from threading import Thread, Event
@@ -8,6 +8,7 @@ from typing import Optional, Callable
 from utils.logger import get_logger, log_startup
 from utils.config_manager import get_config
 from core.command_processor import CommandProcessor
+from modules import AutomationScheduler
 from voice import SpeechRecognizer, TextToSpeech, WakeWordDetector, SimpleWakeWordDetector
 from personality.response_generator import ResponseGenerator
 
@@ -20,25 +21,46 @@ class Jarvis:
 
     def __init__(self):
         log_startup()
-        logger.info("Initializing Jarvis V2...")
+        logger.info("Initializing Jarvis X...")
 
         # Core components
         self.command_processor = CommandProcessor()
         self.response_generator = ResponseGenerator()
+        self.automation_scheduler = AutomationScheduler(
+            self.command_processor.smart_home_manager,
+            self.command_processor.android_tools_manager
+        )
 
         # Voice components
         self.voice_enabled = config.get('voice.enabled', True)
         if self.voice_enabled:
-            self.speech_recognizer = SpeechRecognizer()
+            try:
+                self.speech_recognizer = SpeechRecognizer()
+            except Exception as e:
+                logger.warning(f"Speech recognizer unavailable: {e}")
+                self.speech_recognizer = None
+
             self.text_to_speech = TextToSpeech()
 
             # Wake word detection
             self.wake_word_enabled = config.get('voice.wake_word_enabled', False)
             if self.wake_word_enabled:
-                try:
-                    self.wake_word_detector = WakeWordDetector()
-                except Exception:
-                    self.wake_word_detector = SimpleWakeWordDetector()
+                configured_wake_word = config.get('voice.wake_word', 'jarvis').strip()
+
+                # Porcupine supports specific keywords, so multi-word phrases use the simple detector.
+                if ' ' in configured_wake_word:
+                    logger.info("Using simple wake word detector for multi-word wake phrase")
+                    self.wake_word_detector = SimpleWakeWordDetector(configured_wake_word)
+                else:
+                    try:
+                        detector = WakeWordDetector(configured_wake_word)
+                        if detector.porcupine is not None:
+                            self.wake_word_detector = detector
+                        else:
+                            logger.info("Porcupine unavailable, falling back to simple wake word detector")
+                            self.wake_word_detector = SimpleWakeWordDetector(configured_wake_word)
+                    except Exception:
+                        self.wake_word_detector = SimpleWakeWordDetector(configured_wake_word)
             else:
                 self.wake_word_detector = None
         else:
@@ -50,12 +72,14 @@ class Jarvis:
         self.is_running = False
         self.listening_continuously = False
         self.stop_event = Event()
+        self.voice_lock_enabled = config.get('voice.voice_lock_enabled', False)
+        self.voice_lock_phrase = config.get('voice.voice_lock_phrase', '').strip().lower()
 
         # Callbacks
         self.on_command_callback: Optional[Callable] = None
         self.on_response_callback: Optional[Callable] = None
 
-        logger.info("Jarvis V2 initialized successfully")
+        logger.info("Jarvis X initialized successfully")
 
     def start(self):
         """Start Jarvis"""
@@ -70,7 +94,10 @@ class Jarvis:
         greeting = self.response_generator.generate('greeting')
         self.speak(greeting)
 
-        logger.info("Jarvis V2 started")
+        if config.get('automations.enabled', False):
+            self.automation_scheduler.start()
+
+        logger.info("Jarvis X started")
 
     def stop(self):
         """Stop Jarvis"""
@@ -87,6 +114,8 @@ class Jarvis:
 
         if self.wake_word_detector:
             self.wake_word_detector.stop()
+
+        self.automation_scheduler.stop()
 
         logger.info("Jarvis stopped")
 
@@ -141,7 +170,7 @@ class Jarvis:
         if not self.voice_enabled or not self.speech_recognizer:
             return {
                 'success': False,
-                'response': 'Voice commands are not enabled'
+                'response': 'Voice commands are not available. Install microphone dependencies and verify input device access.'
             }
 
         logger.info("Listening for voice command...")
@@ -160,6 +189,28 @@ class Jarvis:
 
         # Process command
         command = listen_result['text']
+
+        if self.voice_lock_enabled:
+            if not self.voice_lock_phrase:
+                return {
+                    'success': False,
+                    'response': 'Voice lock is enabled, but no lock phrase is configured.'
+                }
+
+            if not command.lower().startswith(self.voice_lock_phrase + " "):
+                logger.warning("Voice command rejected by voice lock")
+                return {
+                    'success': False,
+                    'response': 'Voice lock active. Begin your command with your lock phrase.'
+                }
+
+            command = command[len(self.voice_lock_phrase):].strip()
+            if not command:
+                return {
+                    'success': False,
+                    'response': 'Voice lock phrase detected. Please provide a command after it.'
+                }
+
         return self.process_command(command, speak_response=True)
 
     def start_listening(self):

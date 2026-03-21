@@ -1,16 +1,22 @@
 @echo off
 echo ================================================
-echo   JARVIS V2 - Installation Script
+echo   JARVIS X - Installation Script
 echo ================================================
 echo.
 
 REM Check if Python is installed
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Error: Python is not installed or not in PATH
-    echo Please install Python 3.8 or higher from python.org
-    pause
-    exit /b 1
+    py --version >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo Error: Python is not installed or not in PATH
+        echo Please install Python 3.8 or higher from python.org
+        pause
+        exit /b 1
+    )
+    set PYTHON_CMD=py -3
+) else (
+    set PYTHON_CMD=python
 )
 
 echo [1/5] Python found
@@ -21,7 +27,7 @@ echo [2/5] Creating virtual environment...
 if exist venv (
     echo Virtual environment already exists
 ) else (
-    python -m venv venv
+    %PYTHON_CMD% -m venv venv
     if %errorlevel% neq 0 (
         echo Error: Failed to create virtual environment
         pause
@@ -38,8 +44,9 @@ pip install -r requirements.txt
 
 if %errorlevel% neq 0 (
     echo.
-    echo Warning: Some packages failed to install
-    echo This is normal for optional dependencies like pywin32
+    echo Warning: Some packages failed to install.
+    echo Optional audio dependencies may fail without Visual C++ Build Tools.
+    echo Jarvis CLI and most features will still work.
     echo.
 )
 echo.

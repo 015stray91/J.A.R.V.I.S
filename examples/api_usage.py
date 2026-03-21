@@ -1,5 +1,5 @@
 """
-Example usage of Jarvis V2 API
+Example usage of Jarvis X API
 """
 
 from core import get_jarvis
@@ -50,3 +50,4 @@ try:
         time.sleep(1)
 except KeyboardInterrupt:
     jarvis.stop()
+

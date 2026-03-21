@@ -1,5 +1,5 @@
 @echo off
-echo Starting Jarvis V2...
+echo Starting Jarvis X...
 echo.
 
 REM Check if virtual environment exists

@@ -1,12 +1,17 @@
 """
-Wake Word Detection for Jarvis V2
+Wake Word Detection for Jarvis X
 Listens for wake word to activate voice commands
 """
 
 import struct
+import re
+from difflib import SequenceMatcher
 from threading import Thread, Event
 from typing import Optional, Callable
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    pyaudio = None
 from utils.logger import get_logger
 from utils.config_manager import get_config
 
@@ -102,6 +107,10 @@ class WakeWordDetector:
     def _listen_loop(self, callback: Callable):
         """Main listening loop"""
         try:
+            if pyaudio is None:
+                logger.warning("pyaudio is not installed. Wake word audio stream is unavailable.")
+                return
+
             self.pa = pyaudio.PyAudio()
 
             self.audio_stream = self.pa.open(
@@ -165,9 +174,56 @@ class SimpleWakeWordDetector:
 
     def __init__(self, wake_word: Optional[str] = None):
         self.wake_word = wake_word or config.get('voice.wake_word', 'jarvis')
+        self.wake_word_min_similarity = float(config.get('voice.wake_word_min_similarity', 0.86))
+        self.wake_word_aliases = config.get('voice.wake_word_aliases', [])
         self.is_listening = False
         self.stop_event = Event()
         self.listen_thread = None
+
+    @staticmethod
+    def _normalize_text(text: str) -> str:
+        """Normalize text before wake phrase matching."""
+        lowered = text.lower().strip()
+        cleaned = re.sub(r"[^a-z0-9' ]+", " ", lowered)
+        return " ".join(cleaned.split())
+
+    def _matches_phrase(self, source_text: str, phrase: str) -> bool:
+        """Match wake phrase using strict containment and similarity windows."""
+        normalized_source = self._normalize_text(source_text)
+        normalized_phrase = self._normalize_text(phrase)
+
+        if not normalized_source or not normalized_phrase:
+            return False
+
+        if normalized_phrase in normalized_source:
+            return True
+
+        source_tokens = normalized_source.split()
+        phrase_tokens = normalized_phrase.split()
+
+        if len(source_tokens) < len(phrase_tokens):
+            similarity = SequenceMatcher(None, normalized_source, normalized_phrase).ratio()
+            return similarity >= self.wake_word_min_similarity
+
+        phrase_len = len(phrase_tokens)
+        for i in range(0, len(source_tokens) - phrase_len + 1):
+            window = " ".join(source_tokens[i:i + phrase_len])
+            similarity = SequenceMatcher(None, window, normalized_phrase).ratio()
+            if similarity >= self.wake_word_min_similarity:
+                return True
+
+        return False
+
+    def _matches_wake_word(self, source_text: str) -> bool:
+        """Check wake phrase and aliases with similarity safeguards."""
+        if self._matches_phrase(source_text, self.wake_word):
+            return True
+
+        for alias in self.wake_word_aliases:
+            if isinstance(alias, str) and alias and self._matches_phrase(source_text, alias):
+                return True
+
+        return False
 
     def start(self, callback: Callable):
         """Start listening for wake word"""
@@ -188,8 +244,8 @@ class SimpleWakeWordDetector:
                 result = recognizer.listen(timeout=2)
 
                 if result['success']:
-                    text = result['text'].lower()
-                    if self.wake_word.lower() in text:
+                    text = result['text']
+                    if self._matches_wake_word(text):
                         logger.info(f"Wake word '{self.wake_word}' detected!")
                         if callback:
                             callback()
@@ -205,3 +261,4 @@ class SimpleWakeWordDetector:
         if self.listen_thread:
             self.listen_thread.join(timeout=2)
         logger.info("Simple wake word detection stopped")
+

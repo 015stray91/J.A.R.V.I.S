@@ -1,7 +1,7 @@
-# Jarvis V2 - Project Architecture
+# Jarvis X - Project Architecture
 
 ## Overview
-Jarvis V2 is a sophisticated desktop AI assistant inspired by Tony Stark's JARVIS. It provides natural language control over your Windows desktop through voice and text commands.
+Jarvis X is a sophisticated desktop AI assistant inspired by Tony Stark's JARVIS. It provides natural language control over your Windows desktop through voice and text commands.
 
 ## Architecture Diagram
 
@@ -343,3 +343,4 @@ python main.py --command "open chrome"
 **Version**: 2.0.0
 **Last Updated**: October 22, 2025
 **License**: MIT
+

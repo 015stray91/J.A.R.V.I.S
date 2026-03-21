@@ -1,5 +1,5 @@
 """
-Test script for Jarvis V2
+Test script for Jarvis X
 Basic functionality tests
 """
 
@@ -128,7 +128,7 @@ def test_tts():
 def run_all_tests():
     """Run all tests"""
     print("\n" + "="*60)
-    print("  JARVIS V2 - System Tests")
+    print("  JARVIS X - System Tests")
     print("="*60)
 
     try:
@@ -150,3 +150,4 @@ def run_all_tests():
 
 if __name__ == "__main__":
     run_all_tests()
+
