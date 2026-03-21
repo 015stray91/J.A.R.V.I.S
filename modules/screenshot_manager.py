@@ -1,5 +1,5 @@
 """
-Screenshot Manager for Jarvis V2
+Screenshot Manager for Jarvis X
 Handles taking and saving screenshots
 """
 
@@ -249,3 +249,4 @@ class ScreenshotManager:
     def get_screen_size(self) -> Tuple[int, int]:
         """Get screen dimensions"""
         return pyautogui.size()
+

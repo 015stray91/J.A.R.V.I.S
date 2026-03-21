@@ -1,5 +1,5 @@
 """
-Generate Word Document for JARVIS V2 Project Report
+Generate Word Document for JARVIS X Project Report
 """
 # pylint: disable=line-too-long
 
@@ -20,7 +20,7 @@ style.font.size = Pt(11)
 # ============================================================================
 
 # Title
-title = doc.add_heading('JARVIS V2 - DESKTOP AI ASSISTANT', 0)
+title = doc.add_heading('JARVIS X - DESKTOP AI ASSISTANT', 0)
 title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 title_run = title.runs[0]
 title_run.font.size = Pt(20)
@@ -105,7 +105,7 @@ doc.add_page_break()
 
 doc.add_heading('PAGE 1 — TITLE / ABSTRACT / INTRODUCTION', level=1)
 
-doc.add_heading('JARVIS V2 - DESKTOP AI ASSISTANT', level=2)
+doc.add_heading('JARVIS X - DESKTOP AI ASSISTANT', level=2)
 subtitle_p = doc.add_paragraph('Just A Rather Very Intelligent System')
 subtitle_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -128,7 +128,7 @@ details.add_run('SRM Institute of Science and Technology, Kattankulathur\n')
 
 doc.add_heading('ABSTRACT', level=2)
 
-abstract_text = """JARVIS V2 is a sophisticated desktop AI assistant inspired by Tony Stark's JARVIS from the Marvel Cinematic Universe. This Python-based application provides natural language voice and text control over Windows desktop operations, enabling hands-free computing through intelligent command processing. The system integrates speech recognition, text-to-speech synthesis, natural language processing, and desktop automation to create a comprehensive personal assistant. Core functionalities include application management, window control, screenshot capture, file operations, and system management. Built with modularity and extensibility in mind, JARVIS V2 demonstrates advanced programming concepts including multi-threading, design patterns, API integration, and real-time event processing. The project successfully delivers three operational modes (GUI, CLI, Voice) and processes over 50+ command types with intelligent intent recognition and personality-driven responses."""
+abstract_text = """JARVIS X is a sophisticated desktop AI assistant inspired by Tony Stark's JARVIS from the Marvel Cinematic Universe. This Python-based application provides natural language voice and text control over Windows desktop operations, enabling hands-free computing through intelligent command processing. The system integrates speech recognition, text-to-speech synthesis, natural language processing, and desktop automation to create a comprehensive personal assistant. Core functionalities include application management, window control, screenshot capture, file operations, and system management. Built with modularity and extensibility in mind, JARVIS X demonstrates advanced programming concepts including multi-threading, design patterns, API integration, and real-time event processing. The project successfully delivers three operational modes (GUI, CLI, Voice) and processes over 50+ command types with intelligent intent recognition and personality-driven responses."""
 
 doc.add_paragraph(abstract_text)
 
@@ -146,7 +146,7 @@ doc.add_heading('PAGE 2 — PROBLEM STATEMENT, OBJECTIVES, SCOPE', level=1)
 
 doc.add_heading('1. INTRODUCTION / BACKGROUND', level=2)
 
-intro_text = """Modern computer interaction predominantly relies on manual keyboard and mouse inputs, which can be inefficient for multitasking professionals and accessibility-challenged users. Voice-controlled desktop assistants represent the next evolution in human-computer interaction, offering hands-free operation and natural language communication. While commercial solutions like Cortana and Siri exist, they lack customization, privacy, and deep desktop integration. JARVIS V2 addresses this gap by providing a fully customizable, open-source, privacy-focused desktop assistant that runs entirely locally on Windows systems. The project leverages Python's extensive ecosystem for speech processing, desktop automation, and GUI development to create a production-ready personal assistant."""
+intro_text = """Modern computer interaction predominantly relies on manual keyboard and mouse inputs, which can be inefficient for multitasking professionals and accessibility-challenged users. Voice-controlled desktop assistants represent the next evolution in human-computer interaction, offering hands-free operation and natural language communication. While commercial solutions like Cortana and Siri exist, they lack customization, privacy, and deep desktop integration. JARVIS X addresses this gap by providing a fully customizable, open-source, privacy-focused desktop assistant that runs entirely locally on Windows systems. The project leverages Python's extensive ecosystem for speech processing, desktop automation, and GUI development to create a production-ready personal assistant."""
 
 doc.add_paragraph(intro_text)
 
@@ -262,7 +262,7 @@ for item in dev_tools:
 
 doc.add_heading('6. SYSTEM ARCHITECTURE', level=2)
 
-arch_text = """JARVIS V2 follows a modular, layered architecture with clear separation of concerns:
+arch_text = """JARVIS X follows a modular, layered architecture with clear separation of concerns:
 
 PRESENTATION LAYER: GUI Mode (CustomTkinter), CLI Mode (Terminal), Voice Mode (Continuous)
 
@@ -464,9 +464,9 @@ doc.add_page_break()
 
 doc.add_heading('CONCLUSION', level=2)
 
-conclusion_text = """JARVIS V2 has been successfully implemented as a fully functional desktop AI assistant. The system demonstrates advanced Python programming concepts including multi-threading, modular design, API integration, and user interface development. All three operational modes (GUI, CLI, Voice) have been tested and validated. The project achieves its objectives of providing intelligent voice-controlled desktop automation while maintaining code quality, documentation, and extensibility.
+conclusion_text = """JARVIS X has been successfully implemented as a fully functional desktop AI assistant. The system demonstrates advanced Python programming concepts including multi-threading, modular design, API integration, and user interface development. All three operational modes (GUI, CLI, Voice) have been tested and validated. The project achieves its objectives of providing intelligent voice-controlled desktop automation while maintaining code quality, documentation, and extensibility.
 
-The modular architecture allows for easy enhancement and customization, making JARVIS V2 a solid foundation for future AI assistant development. The comprehensive logging, error handling, and configuration management ensure production-ready reliability."""
+The modular architecture allows for easy enhancement and customization, making JARVIS X a solid foundation for future AI assistant development. The comprehensive logging, error handling, and configuration management ensure production-ready reliability."""
 
 doc.add_paragraph(conclusion_text)
 
@@ -540,3 +540,4 @@ footer.add_run('Institution: SRM Institute of Science and Technology')
 # Save document
 doc.save('PROJECT_REPORT_PHASE1.docx')
 print("Word document created successfully: PROJECT_REPORT_PHASE1.docx")
+

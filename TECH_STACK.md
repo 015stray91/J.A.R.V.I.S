@@ -1,7 +1,7 @@
-# JARVIS V2 - Technology Stack
+# JARVIS X - Technology Stack
 
 ## Overview
-This document provides a comprehensive list of all technologies, libraries, frameworks, and tools used in the JARVIS V2 Desktop AI Assistant project.
+This document provides a comprehensive list of all technologies, libraries, frameworks, and tools used in the JARVIS X Desktop AI Assistant project.
 
 ---
 
@@ -501,7 +501,7 @@ This document provides a comprehensive list of all technologies, libraries, fram
 ## License Information
 
 ### Open Source Licenses
-- **MIT License** - JARVIS V2 Project
+- **MIT License** - JARVIS X Project
 - Various open-source licenses for dependencies
   - Most are MIT, BSD, or Apache 2.0
   - Check individual package licenses for details
@@ -585,4 +585,5 @@ pip install openai
 
 **Document Version**: 1.0
 **Last Updated**: October 27, 2025
-**Project**: JARVIS V2 - Desktop AI Assistant
+**Project**: JARVIS X - Desktop AI Assistant
+

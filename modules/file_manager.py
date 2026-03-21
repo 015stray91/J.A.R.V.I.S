@@ -1,5 +1,5 @@
 """
-File Manager for Jarvis V2
+File Manager for Jarvis X
 Handles file and folder operations
 """
 
@@ -315,3 +315,4 @@ class FileManager:
                     return resolved_path
 
         return None
+

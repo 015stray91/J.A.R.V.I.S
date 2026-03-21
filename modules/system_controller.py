@@ -1,9 +1,10 @@
 """
-System Controller for Jarvis V2
+System Controller for Jarvis X
 Handles system-level operations (volume, power, system info, etc.)
 """
 
 import subprocess
+import os
 from typing import Dict
 import psutil
 from utils.logger import get_logger
@@ -320,3 +321,238 @@ class SystemController:
                 'success': False,
                 'message': f"Error: {str(e)}"
             }
+
+    def get_wifi_status(self) -> Dict[str, any]:
+        """Get current Wi-Fi connection status."""
+        try:
+            result = subprocess.run(
+                ['netsh', 'wlan', 'show', 'interfaces'],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': 'Wi-Fi status collected' if result.returncode == 0 else 'Failed to read Wi-Fi status',
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error getting Wi-Fi status: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+
+    def get_ram_acceleration_status(self) -> Dict[str, any]:
+        """Return RAM acceleration (zram) status on Linux, with platform guidance elsewhere."""
+        if os.name == 'nt':
+            return {
+                'success': True,
+                'enabled': False,
+                'message': 'zram is Linux-only. On Windows use page-file tuning or RAM-disk tools for similar behavior.'
+            }
+
+        try:
+            result = subprocess.run(
+                ['zramctl'],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip()
+            enabled = result.returncode == 0 and 'zram' in output.lower()
+            return {
+                'success': result.returncode == 0,
+                'enabled': enabled,
+                'message': 'zram status collected' if result.returncode == 0 else 'Unable to read zram status',
+                'output': output
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'enabled': False,
+                'message': f'Error checking zram status: {e}'
+            }
+
+    def enable_ram_acceleration(self, size_gb: int = 4) -> Dict[str, any]:
+        """Enable zram swap on Linux; provide safe guidance on non-Linux systems."""
+        if os.name == 'nt':
+            return {
+                'success': False,
+                'message': 'zram cannot be enabled on Windows. Use Linux for zram or configure a RAM-disk utility.'
+            }
+
+        # Best-effort setup. Requires root/sudo privileges on Linux.
+        commands = [
+            'modprobe zram',
+            f'echo $(( {size_gb} * 1024 * 1024 * 1024 )) | sudo tee /sys/block/zram0/disksize',
+            'sudo mkswap /dev/zram0',
+            'sudo swapon -p 100 /dev/zram0'
+        ]
+
+        outputs = []
+        for cmd in commands:
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=False)
+            out = (result.stdout or '').strip() or (result.stderr or '').strip()
+            outputs.append({'command': cmd, 'success': result.returncode == 0, 'output': out})
+            if result.returncode != 0:
+                return {
+                    'success': False,
+                    'message': 'Failed enabling zram. Root permissions and zram support are required.',
+                    'steps': outputs
+                }
+
+        return {
+            'success': True,
+            'message': f'zram enabled with approximately {size_gb} GB compressed swap.',
+            'steps': outputs
+        }
+
+    def disable_ram_acceleration(self) -> Dict[str, any]:
+        """Disable zram swap on Linux."""
+        if os.name == 'nt':
+            return {
+                'success': False,
+                'message': 'zram disable is Linux-only.'
+            }
+
+        commands = [
+            'sudo swapoff /dev/zram0',
+            'echo 1 | sudo tee /sys/block/zram0/reset'
+        ]
+
+        outputs = []
+        for cmd in commands:
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=False)
+            out = (result.stdout or '').strip() or (result.stderr or '').strip()
+            outputs.append({'command': cmd, 'success': result.returncode == 0, 'output': out})
+
+        any_success = any(step['success'] for step in outputs)
+        return {
+            'success': any_success,
+            'message': 'zram disable attempted. Verify with zram status.',
+            'steps': outputs
+        }
+
+    def list_wifi_profiles(self) -> Dict[str, any]:
+        """List saved Wi-Fi profiles."""
+        try:
+            result = subprocess.run(
+                ['netsh', 'wlan', 'show', 'profiles'],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': 'Wi-Fi profiles listed' if result.returncode == 0 else 'Failed to list Wi-Fi profiles',
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error listing Wi-Fi profiles: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+
+    def wifi_connect(self, profile_name: str) -> Dict[str, any]:
+        """Connect to a saved Wi-Fi profile by name."""
+        try:
+            result = subprocess.run(
+                ['netsh', 'wlan', 'connect', f'name={profile_name}'],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': f"Wi-Fi connect requested for '{profile_name}'" if result.returncode == 0 else f"Failed to connect Wi-Fi profile '{profile_name}'",
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error connecting Wi-Fi: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+
+    def wifi_disconnect(self) -> Dict[str, any]:
+        """Disconnect current Wi-Fi network."""
+        try:
+            result = subprocess.run(
+                ['netsh', 'wlan', 'disconnect'],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': 'Wi-Fi disconnected' if result.returncode == 0 else 'Failed to disconnect Wi-Fi',
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error disconnecting Wi-Fi: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+
+    def wifi_toggle(self, enabled: bool) -> Dict[str, any]:
+        """Enable or disable Wi-Fi adapter (Windows)."""
+        try:
+            state = 'ENABLED' if enabled else 'DISABLED'
+            # This targets the common adapter name; user can adjust adapter name if needed.
+            command = (
+                "Get-NetAdapter | Where-Object {$_.InterfaceDescription -match 'Wireless|Wi-Fi'} "
+                f"| ForEach-Object {{ Set-NetAdapter -Name $_.Name -AdminStatus {state} -Confirm:$false }}"
+            )
+            result = subprocess.run(
+                ['powershell', '-NoProfile', '-Command', command],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': f"Wi-Fi {'enabled' if enabled else 'disabled'}" if result.returncode == 0 else f"Failed to {'enable' if enabled else 'disable'} Wi-Fi",
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error toggling Wi-Fi: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+
+    def bluetooth_toggle(self, enabled: bool) -> Dict[str, any]:
+        """Enable or disable Bluetooth radios (best effort on Windows)."""
+        try:
+            state = 'Up' if enabled else 'Down'
+            command = (
+                "Get-PnpDevice -Class Bluetooth -Status OK -ErrorAction SilentlyContinue "
+                f"| ForEach-Object {{ {'Enable-PnpDevice' if enabled else 'Disable-PnpDevice'} -InstanceId $_.InstanceId -Confirm:$false -ErrorAction SilentlyContinue }}"
+            )
+            result = subprocess.run(
+                ['powershell', '-NoProfile', '-Command', command],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            output = (result.stdout or '').strip() or (result.stderr or '').strip() or 'No output'
+            return {
+                'success': result.returncode == 0,
+                'message': f"Bluetooth toggle command sent ({state})" if result.returncode == 0 else 'Failed to toggle Bluetooth',
+                'output': output
+            }
+        except Exception as e:
+            logger.error(f"Error toggling Bluetooth: {e}")
+            return {
+                'success': False,
+                'message': f"Error: {str(e)}"
+            }
+

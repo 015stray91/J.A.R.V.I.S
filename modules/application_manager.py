@@ -1,5 +1,5 @@
 """
-Application Manager for Jarvis V2
+Application Manager for Jarvis X
 Handles launching, closing, and managing applications
 """
 
@@ -348,3 +348,4 @@ class ApplicationManager:
     def is_running(self, app_name: str) -> bool:
         """Check if an application is currently running"""
         return len(self._find_processes(app_name)) > 0
+

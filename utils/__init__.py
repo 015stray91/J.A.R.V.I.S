@@ -1,5 +1,5 @@
 """
-Utilities package for Jarvis V2
+Utilities package for Jarvis X
 """
 
 from .logger import get_logger, log_startup, log_shutdown
@@ -28,3 +28,4 @@ __all__ = [
     'get_timestamp',
     'Timer'
 ]
+

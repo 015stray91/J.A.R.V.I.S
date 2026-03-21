@@ -1,5 +1,5 @@
 """
-Response templates and personality framework for Jarvis V2
+Response templates and personality framework for Jarvis X
 """
 
 from typing import Optional
@@ -347,3 +347,4 @@ class ResponseGenerator:
 
     def _generate_unknown(self, **kwargs) -> str:
         return self.templates.get_unknown_intent_response()
+

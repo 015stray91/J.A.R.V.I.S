@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "created_at": "2026-03-20T21:12:36",
+  "entries": [
+    {
+      "timestamp": "2026-03-20T21:12:42",
+      "command": "workflow status",
+      "intent": "workflow_memory_status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Workflow memory retention: 0/800 entries. Success rate: 0.0%. Top intents: none yet."
+    },
+    {
+      "timestamp": "2026-03-20T21:14:11",
+      "command": "export workflow package",
+      "intent": "export_workflow_memory",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Workflow package exported: exports\\workflow_package_20260320_211411.json"
+    },
+    {
+      "timestamp": "2026-03-20T21:14:24",
+      "command": "workflow status",
+      "intent": "workflow_memory_status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Workflow memory retention: 2/800 entries. Success rate: 100.0%. Top intents: workflow_memory_status(1), export_workflow_memory(1)."
+    },
+    {
+      "timestamp": "2026-03-20T21:16:28",
+      "command": "status",
+      "intent": "status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Fully functional and at your service, sir."
+    },
+    {
+      "timestamp": "2026-03-20T21:18:11",
+      "command": "status",
+      "intent": "status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Online and operational, sir."
+    },
+    {
+      "timestamp": "2026-03-20T21:21:14",
+      "command": "workflow status",
+      "intent": "workflow_memory_status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Workflow memory retention: 5/800 entries. Success rate: 100.0%. Top intents: workflow_memory_status(2), status(2), export_workflow_memory(1)."
+    },
+    {
+      "timestamp": "2026-03-20T21:26:30",
+      "command": "self repair scan",
+      "intent": "self_repair_scan",
+      "success": false,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Admin authorization required. Say: admin authorize <your passphrase>.",
+      "latency_ms": 0.0,
+      "metrics": {
+        "cpu_percent": 53.8,
+        "memory_percent": 62.8
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:26:58",
+      "command": "admin authorize test-pass",
+      "intent": "admin_authorize",
+      "success": false,
+      "confidence": 1.0,
+      "parameters": {
+        "query": "test-pass"
+      },
+      "response": "Admin passphrase is not configured. Set security.admin_control.passphrase in config.json.",
+      "latency_ms": 0.0,
+      "metrics": {
+        "cpu_percent": 100.0,
+        "memory_percent": 64.7
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:27:16",
+      "command": "self repair scan",
+      "intent": "self_repair_scan",
+      "success": false,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Admin authorization required. Say: admin authorize <your passphrase>.",
+      "latency_ms": 0.0,
+      "metrics": {
+        "cpu_percent": 58.8,
+        "memory_percent": 62.4
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:31:32",
+      "command": "set workflow preferences do not repeat and use markdown numbered concise",
+      "intent": "set_workflow_preferences",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {
+        "query": "preferences do not repeat and use markdown numbered concise"
+      },
+      "response": "1. Workflow preferences saved\n2. anti_repeat=True, markdown_instructions=True, instruction_style=numbered, verbosity=concise",
+      "latency_ms": 2.8,
+      "metrics": {
+        "cpu_percent": 54.4,
+        "memory_percent": 62.4
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:31:47",
+      "command": "show workflow preferences",
+      "intent": "show_workflow_preferences",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Current workflow preferences: anti_repeat=True, markdown_instructions=True, instruction_style=numbered, verbosity=concise.",
+      "latency_ms": 0.1,
+      "metrics": {
+        "cpu_percent": 59.5,
+        "memory_percent": 62.5
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:32:00",
+      "command": "help",
+      "intent": "help",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "I can assist you with various tasks, sir:\n\n**Application Control:**\n- \"Open Chrome\" / \"Close Firefox\" / \"Switch to VSCode\"\n\n**Screenshots:**\n- \"Take a screenshot\" / \"Screenshot this window\"\n\n**System Control:**\n- \"Volume to 50%\" / \"Mute\" / \"Lock screen\"\n- \"How's the system doing?",
+      "latency_ms": 0.1,
+      "metrics": {
+        "cpu_percent": 50.8,
+        "memory_percent": 62.3
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:35:06",
+      "command": "admin authorize check yourself",
+      "intent": "admin_authorize",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {
+        "query": "check yourself"
+      },
+      "response": "Admin maintenance session enabled for 20 minutes.",
+      "latency_ms": 0.1,
+      "metrics": {
+        "cpu_percent": 95.9,
+        "memory_percent": 61.3
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:39:18",
+      "command": "zram status",
+      "intent": "ram_acceleration_status",
+      "success": true,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "zram is Linux-only. On Windows use page-file tuning or RAM-disk tools for similar behavior.",
+      "latency_ms": 0.0,
+      "metrics": {
+        "cpu_percent": 93.2,
+        "memory_percent": 60.4
+      }
+    },
+    {
+      "timestamp": "2026-03-20T21:39:24",
+      "command": "enable zram",
+      "intent": "ram_acceleration_enable",
+      "success": false,
+      "confidence": 1.0,
+      "parameters": {},
+      "response": "Admin authorization required. Say: admin authorize <your passphrase>.",
+      "latency_ms": 0.0,
+      "metrics": {
+        "cpu_percent": 97.1,
+        "memory_percent": 62.3
+      }
+    }
+  ],
+  "preferences": {
+    "anti_repeat": true,
+    "markdown_instructions": true,
+    "instruction_style": "numbered",
+    "verbosity": "concise"
+  }
+}

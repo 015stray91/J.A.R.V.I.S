@@ -1,5 +1,5 @@
 @echo off
-echo Running Jarvis V2 Tests...
+echo Running Jarvis X Tests...
 echo.
 
 if not exist venv (
@@ -10,5 +10,5 @@ if not exist venv (
 )
 
 call venv\Scripts\activate.bat
-python test_jarvis.py
+venv\Scripts\python.exe test_jarvis.py
 pause

@@ -1,4 +1,4 @@
-# Jarvis V2 Changelog
+# Jarvis X Changelog
 
 ## Version 2.0.0 (2025-10-22)
 
@@ -70,3 +70,4 @@
 - Email integration
 - Calendar management
 - Smart home integration
+

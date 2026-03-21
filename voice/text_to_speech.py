@@ -1,5 +1,5 @@
 """
-Text-to-Speech for Jarvis V2
+Text-to-Speech for Jarvis X
 Converts text to spoken audio
 """
 
@@ -172,3 +172,4 @@ class TextToSpeech:
         except Exception as e:
             logger.error(f"Error saving speech to file: {e}")
             return False
+

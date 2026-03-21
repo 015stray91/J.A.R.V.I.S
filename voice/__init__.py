@@ -1,5 +1,5 @@
 """
-Voice package for Jarvis V2
+Voice package for Jarvis X
 """
 
 from .speech_recognition import SpeechRecognizer
@@ -12,3 +12,4 @@ __all__ = [
     'WakeWordDetector',
     'SimpleWakeWordDetector'
 ]
+

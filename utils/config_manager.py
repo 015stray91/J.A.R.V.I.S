@@ -1,5 +1,5 @@
 """
-Configuration Manager for Jarvis V2
+Configuration Manager for Jarvis X
 Handles loading, saving, and accessing configuration settings
 """
 
@@ -65,7 +65,7 @@ class ConfigManager:
         """Set minimal working configuration"""
         self.config = {
             "general": {
-                "app_name": "Jarvis V2",
+                "app_name": "Jarvis X",
                 "version": "2.0.0",
                 "debug_mode": False,
                 "log_level": "INFO"
@@ -199,3 +199,4 @@ def get_config(config_path: str = "config/config.json") -> ConfigManager:
     if _config is None:
         _config = ConfigManager(config_path)
     return _config
+

@@ -1,5 +1,5 @@
 """
-Logger utility for Jarvis V2
+Logger utility for Jarvis X
 Provides structured logging with color-coded console output and file logging
 """
 
@@ -124,7 +124,7 @@ def log_startup():
     """Log system startup"""
     logger = get_logger()
     logger.system("=" * 50)
-    logger.system("JARVIS V2 INITIALIZING")
+    logger.system("JARVIS X INITIALIZING")
     logger.system(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.system("=" * 50)
 
@@ -133,6 +133,7 @@ def log_shutdown():
     """Log system shutdown"""
     logger = get_logger()
     logger.system("=" * 50)
-    logger.system("JARVIS V2 SHUTTING DOWN")
+    logger.system("JARVIS X SHUTTING DOWN")
     logger.system(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.system("=" * 50)
+

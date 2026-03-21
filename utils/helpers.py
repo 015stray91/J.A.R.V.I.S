@@ -1,5 +1,5 @@
 """
-Helper utilities for Jarvis V2
+Helper utilities for Jarvis X
 Common functions used across the application
 """
 
@@ -275,3 +275,4 @@ class Timer:
 
     def __str__(self):
         return f"{self.name}: {self.elapsed:.2f}s"
+
